@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+      }
+      .player {
+        transition: all 0.2s ease-out;
+      }
+
+      .player:hover {
+        opacity: 0.8;
+      }
+
+      #tooltip {
+        pointer-events: none;
+        position: absolute;
+        background-color: white;
+        padding: 10px;
+        border: solid black;
+        border-width: 0.4em;
+      }
+
+      #tooltip.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Wimbledon Grandslam</h1>
+    <h2 style="color: gray">Year: 2010</h2>
+    <div id="tooltip" class="hidden"><span id="value"></span></div>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+      "
+    >
+      <svg></svg>
+    </div>
+  </body>
+</html>
+
+<script>
+  const nodeData = {
+    name: "Rafael Nadal",
+    w_score: 3,
+    l_score: 0,
+    children: [
+      {
+        name: "Rafael Nadal",
+        w_score: 3,
+        l_score: 0,
+        children: [
+          {
+            name: "Rafael Nadal",
+            w_score: 3,
+            l_score: 1,
+            children: [
+              {
+                name: "Rafael Nadal",
+                w_score: 3,
+                l_score: 0,
+                children: [
+                  {
+                    name: "Rafael Nadal",
+                    w_score: 3,
+                    l_score: 2,
+                    children: [
+                      {
+                        name: "Rafael Nadal",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Rafael Nadal",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Rafael Nadal",
+                                size: 1,
+                              },
+                              {
+                                name: "Kei Nishikori",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Robin Haase",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Robin Haase",
+                                size: 1,
+                              },
+                              {
+                                name: "James Blake",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Philipp Petzschner",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Philipp Petzschner",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Philipp Petzschner",
+                                size: 1,
+                              },
+                              {
+                                name: "Stephane Robert",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Lukasz Kubot",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Lukasz Kubot",
+                                size: 1,
+                              },
+                              {
+                                name: "Blaz Kavcic",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Paul-Henri Mathieu",
+                    w_score: 3,
+                    l_score: 1,
+                    children: [
+                      {
+                        name: "Paul-Henri Mathieu",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Paul-Henri Mathieu",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Paul-Henri Mathieu",
+                                size: 1,
+                              },
+                              {
+                                name: "Marc Gicquel",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Mikhail Youzhny",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Mikhail Youzhny",
+                                size: 1,
+                              },
+                              {
+                                name: "Dudi Sela",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Thiemo de Bakker",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Thiemo de Bakker",
+                            w_score: 3,
+                            l_score: 3,
+                            children: [
+                              {
+                                name: "Thiemo de Bakker",
+                                size: 1,
+                              },
+                              {
+                                name: "Santiago Giraldo",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "John Isner",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "John Isner",
+                                size: 1,
+                              },
+                              {
+                                name: "Nicolas Mahut",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Robin Soderling",
+                w_score: 3,
+                l_score: 2,
+                children: [
+                  {
+                    name: "Robin Soderling",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Robin Soderling",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Robin Soderling",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Robin Soderling",
+                                size: 1,
+                              },
+                              {
+                                name: "Robby Ginepri",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Marcel Granollers",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Marcel Granollers",
+                                size: 1,
+                              },
+                              {
+                                name: "Fred Gil",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Thomaz Bellucci",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Thomaz Bellucci",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Thomaz Bellucci",
+                                size: 1,
+                              },
+                              {
+                                name: "Ricardo Mello",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Martin Fischer",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Martin Fischer",
+                                size: 1,
+                              },
+                              {
+                                name: "Go Soeda",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "David Ferrer",
+                    w_score: 3,
+                    l_score: 2,
+                    children: [
+                      {
+                        name: "David Ferrer",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "David Ferrer",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "David Ferrer",
+                                size: 1,
+                              },
+                              {
+                                name: "Nicolas Kiefer",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Florent Serra",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Florent Serra",
+                                size: 1,
+                              },
+                              {
+                                name: "Simon Greul",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Jeremy Chardy",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Jeremy Chardy",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Jeremy Chardy",
+                                size: 1,
+                              },
+                              {
+                                name: "Daniel Gimeno-Traver",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Lukas Lacko",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Lukas Lacko",
+                                size: 1,
+                              },
+                              {
+                                name: "Marcos Baghdatis",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Andy Murray",
+            w_score: 3,
+            l_score: 1,
+            children: [
+              {
+                name: "Andy Murray",
+                w_score: 3,
+                l_score: 0,
+                children: [
+                  {
+                    name: "Andy Murray",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Andy Murray",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Andy Murray",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Andy Murray",
+                                size: 1,
+                              },
+                              {
+                                name: "Jan Hajek",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Jarkko Nieminen",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Jarkko Nieminen",
+                                size: 1,
+                              },
+                              {
+                                name: "Stefan Koubek",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Gilles Simon",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Gilles Simon",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Gilles Simon",
+                                size: 1,
+                              },
+                              {
+                                name: "Guillermo Alcaide",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Illya Marchenko",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Illya Marchenko",
+                                size: 1,
+                              },
+                              {
+                                name: "Michael Berrer",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Sam Querrey",
+                    w_score: 3,
+                    l_score: 2,
+                    children: [
+                      {
+                        name: "Sam Querrey",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Sam Querrey",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Sam Querrey",
+                                size: 1,
+                              },
+                              {
+                                name: "Sergiy Stakhovsky",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Ivan Dodig",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Ivan Dodig",
+                                size: 1,
+                              },
+                              {
+                                name: "Oscar Hernandez",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Xavier Malisse",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Xavier Malisse",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Xavier Malisse",
+                                size: 1,
+                              },
+                              {
+                                name: "Juan Carlos Ferrero",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Julian Reister",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Julian Reister",
+                                size: 1,
+                              },
+                              {
+                                name: "Rik De Voest",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Jo-Wilfried Tsonga",
+                w_score: 3,
+                l_score: 1,
+                children: [
+                  {
+                    name: "Jo-Wilfried Tsonga",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Jo-Wilfried Tsonga",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Jo-Wilfried Tsonga",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Jo-Wilfried Tsonga",
+                                size: 1,
+                              },
+                              {
+                                name: "Robert Kendrick",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Alexandr Dolgopolov",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Alexandr Dolgopolov",
+                                size: 1,
+                              },
+                              {
+                                name: "Marco Chiudinelli",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Tobias Kamke",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Tobias Kamke",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Tobias Kamke",
+                                size: 1,
+                              },
+                              {
+                                name: "Guillermo Garcia-Lopez",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Andreas Seppi",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Andreas Seppi",
+                                size: 1,
+                              },
+                              {
+                                name: "Nicolas Almagro",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Julien Benneteau",
+                    w_score: 3,
+                    l_score: 1,
+                    children: [
+                      {
+                        name: "Julien Benneteau",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Julien Benneteau",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Julien Benneteau",
+                                size: 1,
+                              },
+                              {
+                                name: "Kristof Vliegen",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Andreas Beck",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Andreas Beck",
+                                size: 1,
+                              },
+                              {
+                                name: "Jamie Baker",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Fabio Fognini",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Fabio Fognini",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Fabio Fognini",
+                                size: 1,
+                              },
+                              {
+                                name: "Fernando Verdasco",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Michael Russell",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Michael Russell",
+                                size: 1,
+                              },
+                              {
+                                name: "Pere Riba",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Tomas Berdych",
+        w_score: 3,
+        l_score: 0,
+        children: [
+          {
+            name: "Tomas Berdych",
+            w_score: 3,
+            l_score: 1,
+            children: [
+              {
+                name: "Tomas Berdych",
+                w_score: 3,
+                l_score: 1,
+                children: [
+                  {
+                    name: "Tomas Berdych",
+                    w_score: 3,
+                    l_score: 2,
+                    children: [
+                      {
+                        name: "Tomas Berdych",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Tomas Berdych",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Tomas Berdych",
+                                size: 1,
+                              },
+                              {
+                                name: "Andrey Golubev",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Benjamin Becker",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Benjamin Becker",
+                                size: 1,
+                              },
+                              {
+                                name: "Ryan Sweeting",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Denis Istomin",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Denis Istomin",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Denis Istomin",
+                                size: 1,
+                              },
+                              {
+                                name: "Stan Wawrinka",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Rainer Schuettler",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Rainer Schuettler",
+                                size: 1,
+                              },
+                              {
+                                name: "Dmitry Tursunov",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Daniel Brands",
+                    w_score: 3,
+                    l_score: 2,
+                    children: [
+                      {
+                        name: "Daniel Brands",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Daniel Brands",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Daniel Brands",
+                                size: 1,
+                              },
+                              {
+                                name: "Igor Andreev",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Nikolay Davydenko",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Nikolay Davydenko",
+                                size: 1,
+                              },
+                              {
+                                name: "Kevin Anderson",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Victor Hanescu",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Victor Hanescu",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Victor Hanescu",
+                                size: 1,
+                              },
+                              {
+                                name: "Andrey Kuznetsov",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Marsel Ilhan",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Marsel Ilhan",
+                                size: 1,
+                              },
+                              {
+                                name: "Marcos Daniel",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Roger Federer",
+                w_score: 3,
+                l_score: 0,
+                children: [
+                  {
+                    name: "Roger Federer",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Roger Federer",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Roger Federer",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Roger Federer",
+                                size: 1,
+                              },
+                              {
+                                name: "Alejandro Falla",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Ilija Bozoljac",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Ilija Bozoljac",
+                                size: 1,
+                              },
+                              {
+                                name: "Nicolas Massu",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Arnaud Clement",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Arnaud Clement",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Arnaud Clement",
+                                size: 1,
+                              },
+                              {
+                                name: "Janko Tipsarevic",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Peter Luczak",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Peter Luczak",
+                                size: 1,
+                              },
+                              {
+                                name: "Tommy Robredo",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Jurgen Melzer",
+                    w_score: 3,
+                    l_score: 1,
+                    children: [
+                      {
+                        name: "Jurgen Melzer",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Jurgen Melzer",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Jurgen Melzer",
+                                size: 1,
+                              },
+                              {
+                                name: "Dustin Brown",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Viktor Troicki",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Viktor Troicki",
+                                size: 1,
+                              },
+                              {
+                                name: "Igor Kunitsyn",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Feliciano Lopez",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Feliciano Lopez",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Feliciano Lopez",
+                                size: 1,
+                              },
+                              {
+                                name: "Jesse Levine",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Ricardas Berankis",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Ricardas Berankis",
+                                size: 1,
+                              },
+                              {
+                                name: "Carsten Ball",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Novak Djokovic",
+            w_score: 3,
+            l_score: 0,
+            children: [
+              {
+                name: "Novak Djokovic",
+                w_score: 3,
+                l_score: 1,
+                children: [
+                  {
+                    name: "Novak Djokovic",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Novak Djokovic",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Novak Djokovic",
+                            w_score: 3,
+                            l_score: 2,
+                            children: [
+                              {
+                                name: "Novak Djokovic",
+                                size: 1,
+                              },
+                              {
+                                name: "Olivier Rochus",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Taylor Dent",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Taylor Dent",
+                                size: 1,
+                              },
+                              {
+                                name: "Juan Ignacio Chela",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Albert Montanes",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Albert Montanes",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Albert Montanes",
+                                size: 1,
+                              },
+                              {
+                                name: "Paolo Lorenzi",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Brendan Evans",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Brendan Evans",
+                                size: 1,
+                              },
+                              {
+                                name: "Jesse Huta Galung",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Lleyton Hewitt",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Lleyton Hewitt",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Lleyton Hewitt",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Lleyton Hewitt",
+                                size: 1,
+                              },
+                              {
+                                name: "Maximo Gonzalez",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Evgeny Korolev",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Evgeny Korolev",
+                                size: 1,
+                              },
+                              {
+                                name: "Eduardo Schwank",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Gael Monfils",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Gael Monfils",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Gael Monfils",
+                                size: 1,
+                              },
+                              {
+                                name: "Leonardo Mayer",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Karol Beck",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Karol Beck",
+                                size: 1,
+                              },
+                              {
+                                name: "Santiago Ventura",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Yen-Hsun Lu",
+                w_score: 3,
+                l_score: 2,
+                children: [
+                  {
+                    name: "Yen-Hsun Lu",
+                    w_score: 3,
+                    l_score: 0,
+                    children: [
+                      {
+                        name: "Yen-Hsun Lu",
+                        w_score: 3,
+                        l_score: 0,
+                        children: [
+                          {
+                            name: "Yen-Hsun Lu",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Yen-Hsun Lu",
+                                size: 1,
+                              },
+                              {
+                                name: "Horacio Zeballos",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Michal Przysiezny",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Michal Przysiezny",
+                                size: 1,
+                              },
+                              {
+                                name: "Ivan Ljubicic",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Florian Mayer",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Florian Mayer",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Florian Mayer",
+                                size: 1,
+                              },
+                              {
+                                name: "Marin Cilic",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Mardy Fish",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Mardy Fish",
+                                size: 1,
+                              },
+                              {
+                                name: "Bernard Tomic",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "Andy Roddick",
+                    w_score: 3,
+                    l_score: 1,
+                    children: [
+                      {
+                        name: "Andy Roddick",
+                        w_score: 3,
+                        l_score: 1,
+                        children: [
+                          {
+                            name: "Andy Roddick",
+                            w_score: 3,
+                            l_score: 0,
+                            children: [
+                              {
+                                name: "Andy Roddick",
+                                size: 1,
+                              },
+                              {
+                                name: "Rajeev Ram",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Michael Llodra",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Michael Llodra",
+                                size: 1,
+                              },
+                              {
+                                name: "Jesse Witten",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: "Philipp Kohlschreiber",
+                        w_score: 3,
+                        l_score: 2,
+                        children: [
+                          {
+                            name: "Philipp Kohlschreiber",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Philipp Kohlschreiber",
+                                size: 1,
+                              },
+                              {
+                                name: "Potito Starace",
+                                size: 1,
+                              },
+                            ],
+                          },
+                          {
+                            name: "Teymuraz Gabashvili",
+                            w_score: 3,
+                            l_score: 1,
+                            children: [
+                              {
+                                name: "Teymuraz Gabashvili",
+                                size: 1,
+                              },
+                              {
+                                name: "Ramon Delgado",
+                                size: 1,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const width = 1500;
+  const height = 1000;
+  const radius = Math.min(width, height) / 2;
+
+  const g = d3
+    .select("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  const layout = d3.partition().size([2 * Math.PI, radius]);
+
+  const arc = d3
+    .arc()
+    .startAngle((d) => d.x0)
+    .endAngle((d) => d.x1)
+    .innerRadius((d) => d.y0)
+    .outerRadius((d) => d.y1);
+
+  const root = d3.hierarchy(nodeData).sum((d) => d.size);
+  const nodes = root.descendants();
+
+  layout(root);
+
+  const handleMouseOver = (d, i) => {
+    const xPos = parseFloat(d.screenX);
+    const yPos = parseFloat(d.screenY);
+
+    d3.select("#tooltip")
+      .style("left", xPos + "px")
+      .style("top", yPos + "px")
+      .select("#value")
+      .text(i.data.name);
+
+    d3.select("#tooltip").classed("hidden", false);
+  };
+
+  const handleMouseOut = (d, i) =>
+    d3.select("#tooltip").classed("hidden", true);
+
+  const slices = g
+    .selectAll("g")
+    .data(nodes)
+    .enter()
+    .append("g")
+    .on("mouseover", (d, i) => handleMouseOver(d, i))
+    .on("mouseout", (d, i) => handleMouseOut(d, i));
+
+  const computeAngle = (d) => {
+    return ((d.x0 + d.x1) / Math.PI) * 90;
+  };
+
+  const computeTextRotation = (d) => {
+    let angle = computeAngle(d);
+    angle = angle < 90 || angle > 270 ? angle : angle + 180;
+    return angle;
+  };
+
+  const color = (d, wins) => {
+    if (d.data.name === d.parent.data.name) {
+      return d.parent.data.w_score >= wins;
+    } else {
+      return d.parent.data.l_score >= wins;
+    }
+  };
+
+  slices
+    .append("path")
+    .filter((d) => d.parent)
+    .attr("d", arc)
+    .style("stroke", "#222f3e")
+    .style("stroke-width", (d) => d.depth * 2)
+    .style("fill", (d) => {
+      return d.parent && d.parent.data.name == d.data.name
+        ? "#33d9b2"
+        : "white";
+    })
+    .attr("class", "player");
+
+  slices
+    .append("text")
+    .attr("transform", (d) =>
+      d.depth !== 0
+        ? "translate(" +
+          arc.centroid(d) +
+          ") rotate(" +
+          computeTextRotation(d) +
+          ")"
+        : null
+    )
+    .attr("dx", "-27")
+    .attr("dy", (d) => {
+      let ang = computeAngle(d);
+      return ang < 90 || ang > 270 ? "0.1em" : "0.4em";
+    })
+    .attr("font-size", (d) => (d.depth > 4 ? "1.2em" : "1.4em"))
+    .text((d) =>
+      d.depth > 5
+        ? null
+        : d.data.name.split(" ")[1].substring(0, 3).toUpperCase()
+    );
+
+  const addCircles = (slices, cx, wins) => {
+    slices
+      .filter((d) => d.depth < 6 && d.depth !== 0)
+      .append("circle")
+      .attr("transform", (d) =>
+        d.depth !== 0
+          ? "translate(" +
+            arc.centroid(d) +
+            ") rotate(" +
+            computeTextRotation(d) +
+            ")"
+          : null
+      )
+      .attr("cx", cx)
+      .attr("cy", (d) => {
+        let ang = computeAngle(d);
+        return ang < 90 || ang > 270 ? 20 : -20;
+      })
+      .attr("r", 5)
+      .attr("fill", "#222f3e")
+      .attr("fill-opacity", (d) => {
+        return color(d, wins) ? "1" : "0.4";
+      });
+  };
+
+  addCircles(slices, -15, 1);
+  addCircles(slices, 0, 2);
+  addCircles(slices, 15, 3);
+</script>
