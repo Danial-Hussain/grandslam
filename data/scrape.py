@@ -1,6 +1,8 @@
 from typing import Tuple
 import requests as rq
 import pandas as pd
+import datetime
+import argparse
 import json
 
 def get_tournament_url(
@@ -85,10 +87,51 @@ def get_data(
 
 
 if __name__ == "__main__":
-    year = 2010
-    tournament = "wimbledon"
-    data = get_data(year, tournament)
-    tree = build_tree(data)
+    ''' Run the program '''
+    parser = argparse.ArgumentParser()
 
-    with open(f'{tournament}-{year}.json', 'w') as f:
-        json.dump(tree, f)
+    parser.add_argument(
+        '-s', '--start', 
+        type = int, 
+        required = True, 
+        dest = 'start_year', 
+        help = 'start year'
+    )
+    
+    parser.add_argument(
+        '-e', 
+        '--end', 
+        type = int, 
+        dest = 'end_year', 
+        help = 'end year',
+        default = datetime.date.today().year
+    )
+
+    parser.add_argument(
+        '-t',
+        '--tournament',
+        type = str,
+        required = True,
+        dest = "tournament",
+        help = "tournament",
+        choices = [
+            "us-open", 
+            "wimbledon", 
+            "roland-garros", 
+            "australian-open"
+        ]
+    )
+
+    args = parser.parse_args()
+    end_year = args.end_year
+    start_year = args.start_year
+    tournament = args.tournament
+
+    years = range(start_year, end_year + 1)
+
+    for year in list(years):
+        data = get_data(year, tournament)
+        tree = build_tree(data)
+
+        with open(f'{tournament}-{year}.json', 'w') as f:
+            json.dump(tree, f)
