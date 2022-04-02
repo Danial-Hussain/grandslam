@@ -2,15 +2,19 @@
 
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import nodeData from "../public/data.json";
 
-export const Bracket = () => {
+interface BracketProps {
+  nodeData: any;
+}
+
+export const Bracket = ({ nodeData }: BracketProps) => {
   const bracketRef = useRef();
+  const tooltipRef = useRef();
 
   useEffect(() => {
     const width = 1500;
     const height = 1000;
-    const radius = Math.min(width, height) / 2;
+    const radius = Math.min(width, height) / 2 - 10;
 
     const g = d3
       .select(bracketRef.current)
@@ -37,17 +41,17 @@ export const Bracket = () => {
       const xPos = parseFloat(d.screenX);
       const yPos = parseFloat(d.screenY);
 
-      d3.select("#tooltip")
+      d3.select(tooltipRef.current)
         .style("left", xPos + "px")
         .style("top", yPos + "px")
         .select("#value")
         .text(i.data.name);
 
-      d3.select("#tooltip").classed("hidden", false);
+      d3.select(tooltipRef.current).classed("hidden", false);
     };
 
     const handleMouseOut = (d, i) =>
-      d3.select("#tooltip").classed("hidden", true);
+      d3.select(tooltipRef.current).classed("hidden", true);
 
     const slices = g
       .selectAll("g")
@@ -147,6 +151,7 @@ export const Bracket = () => {
         id="tooltip"
         class="hidden"
         className="absolute pointer-events-none bg-white p-4 border-[6px] border-black"
+        ref={tooltipRef}
       >
         <span id="value"></span>
       </div>
