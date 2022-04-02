@@ -20,11 +20,12 @@ const Navbar = () => {
               Tournaments
             </h1>
           </Link>
-          <Link href="/contact" passHref>
-            <h1 className="text-2xl text-gray-500 font-mono underline underline-offset-2 decoration-4 decoration-gray-400 cursor-pointer">
-              Contact
-            </h1>
-          </Link>
+          <a
+            className="text-2xl text-gray-500 font-mono underline underline-offset-2 decoration-4 decoration-gray-400 cursor-pointer"
+            href="mailto: ali.danial.hussain@gmail.com"
+          >
+            Contact
+          </a>
         </div>
       </div>
       <div className="w-full h-2 bg-black"></div>

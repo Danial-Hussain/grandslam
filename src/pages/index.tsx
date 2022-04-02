@@ -17,7 +17,12 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <Bracket nodeData={nodeData} />
+        <Bracket
+          nodeData={nodeData}
+          league={"atp"}
+          wincolor={"#4ade80"}
+          hovercolor={"#22c55e"}
+        />
       </div>
     </div>
   );
