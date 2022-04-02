@@ -26,8 +26,8 @@ const About: NextPage = () => {
         <div className="text-4xl font-bold md:text-6xl ">About</div>
         <div className="w-full h-1 bg-gray-500"></div>
         <div className="text-md tracking-wide text-justify md:text-2xl">
-          As a tennis fanatic myself, I've always enjoyed following the ATP and
-          WTA Grandslam tournaments (Vamos Rafa!). While match schedules and
+          As a tennis fanatic myself, I&apos;ve always enjoyed following the ATP
+          and WTA Grandslam tournaments (Vamos Rafa!). While match schedules and
           timings were always easy to find, I noticed the same couldn't be said
           for tournament brackets.
         </div>

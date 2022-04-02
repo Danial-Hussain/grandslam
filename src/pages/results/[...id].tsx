@@ -7,6 +7,7 @@ import type {
 } from "next";
 import { useRouter } from "next/router";
 import { Bracket } from "../../components/Bracket";
+import { tournamentParams } from "../../utils/utils";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const REDIS_PASSWORD = process.env.REDIS_PASS;
@@ -52,38 +53,12 @@ const Result: NextPage = ({
   const router = useRouter();
   const { id } = router.query;
 
-  let league = id![0];
-  let tournament = id![1];
-  let date = id![2];
-  let color = "";
-  let wincolor = "";
-  let hovercolor = "";
+  let i_league = id![0];
+  let i_tournament = id![1];
+  let i_date = id![2];
 
-  if (tournament == "us-open") {
-    tournament = "US Open";
-    date = `Played on August ${date}`;
-    color = "bg-blue-700";
-    wincolor = "#2563eb";
-    hovercolor = "#1d4ed8";
-  } else if (tournament == "wimbledon") {
-    tournament = "Wimbledon";
-    date = `Played on June ${date}`;
-    color = "bg-green-500";
-    wincolor = "#4ade80";
-    hovercolor = "#22c55e";
-  } else if (tournament == "roland-garros") {
-    tournament = "Roland Garros";
-    date = `Played on May ${date}`;
-    color = "bg-orange-500";
-    wincolor = "#fb923c";
-    hovercolor = "#f97316";
-  } else if (tournament == "australian-open") {
-    tournament = "Australian Open";
-    date = `Played on January ${date}`;
-    color = "bg-sky-500";
-    wincolor = "#38bdf8";
-    hovercolor = "#0ea5e9";
-  }
+  let { color, wincolor, hovercolor, date, tournament, league } =
+    tournamentParams(i_league, i_tournament, i_date);
 
   return (
     <div className="p-4 flex flex-col gap-14">

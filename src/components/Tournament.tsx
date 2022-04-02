@@ -17,7 +17,7 @@ const Tournament = ({
 }: TournamentProps) => {
   const years = [
     2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
-    2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
+    2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
   ];
   return (
     <div className="flex flex-col gap-x-8 gap-y-4 md:grid md:grid-cols-2">
@@ -33,10 +33,11 @@ const Tournament = ({
           ATP Tournaments
         </h2>
         <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 mt-2">
-          {years.map((year) => (
+          {years.map((year, i) => (
             <a
               className="border border-2 border-gray-500 px-2 w-14 text-center cursor-pointer"
               href={`/results/atp/${tournament_url}/${year}`}
+              key={i}
             >
               {year}
             </a>
@@ -46,10 +47,11 @@ const Tournament = ({
           WTA Tournaments
         </h2>
         <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 mt-2">
-          {years.map((year) => (
+          {years.map((year, i) => (
             <a
               className="border border-2 border-gray-500 px-2 w-14 text-center cursor-pointer"
               href={`/results/wta/${tournament_url}/${year}`}
+              key={i}
             >
               {year}
             </a>
