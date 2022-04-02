@@ -1,3 +1,3 @@
 #! /bin/bash
 
-python scrape.py -s=2010 -e=2021 -t="australian-open"
+python scrape.py -s=2010 -e=2021 -t="australian-open" -l="atp"
