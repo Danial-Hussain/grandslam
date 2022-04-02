@@ -3,7 +3,10 @@ import requests as rq
 import pandas as pd
 import datetime
 import argparse
+import dotenv
+import redis
 import json
+import os
 
 def get_tournament_url(
     year: int,
@@ -127,11 +130,22 @@ if __name__ == "__main__":
     start_year = args.start_year
     tournament = args.tournament
 
+    dotenv.load_dotenv(dotenv_path = ".env")
+    REDIS_HOST = os.environ.get("REDIS_HOST")
+    REDIS_PORT = os.environ.get("REDIS_PORT")
+    REDIS_PASS = os.environ.get("REDIS_PASS")
+
+    r = redis.Redis(
+        host = REDIS_HOST,
+        port = REDIS_PORT,
+        password = REDIS_PASS
+    )
+
     years = range(start_year, end_year + 1)
 
     for year in list(years):
         data = get_data(year, tournament)
         tree = build_tree(data)
 
-        with open(f'{tournament}-{year}.json', 'w') as f:
-            json.dump(tree, f)
+        key = f'atp/{tournament}/{year}'
+        r.set(key, json.dumps(tree))
