@@ -19,15 +19,16 @@ export const Bracket = ({
   const bracketRef = useRef();
   const tooltipRef = useRef();
 
+  const width = 1050;
+  const height = 1050;
+
   useEffect(() => {
-    const width = 1500;
-    const height = 1000;
     const radius = Math.min(width, height) / 2 - 10;
 
     const g = d3
       .select(bracketRef.current)
-      .attr("width", width)
-      .attr("height", height)
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", `0 0 ${width} ${height}`)
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -171,7 +172,7 @@ export const Bracket = ({
   }, []);
 
   return (
-    <div className="flex flex-row items-center justify-center">
+    <div className="flex flex-row items-center justify-center w-full relative">
       <div
         id="tooltip"
         className="fixed pointer-events-none bg-white p-4 border-[6px] border-black hidden"
@@ -179,7 +180,7 @@ export const Bracket = ({
       >
         <span id="value"></span>
       </div>
-      <svg ref={bracketRef}></svg>
+      <svg ref={bracketRef} viewBox={`0 0 ${height} ${width}`}></svg>
     </div>
   );
 };
