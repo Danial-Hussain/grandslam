@@ -1,4 +1,4 @@
-import Redis from "ioredis";
+import redis from "../../utils/redis";
 import type {
   NextPage,
   GetStaticProps,
@@ -10,12 +10,6 @@ import { Bracket } from "../../components/Bracket";
 import { tournamentParams } from "../../utils/utils";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const REDIS_PASSWORD = process.env.REDIS_PASS;
-  const REDIS_ENDPOINT = process.env.REDIS_HOST;
-  const REDIS_PORT = process.env.REDIS_PORT;
-  const redis = new Redis(
-    `redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}`
-  );
   const keys = await redis.keys("*");
   const paths = keys.map((key) => {
     return {
@@ -31,12 +25,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
-  const REDIS_PASSWORD = process.env.REDIS_PASS;
-  const REDIS_ENDPOINT = process.env.REDIS_HOST;
-  const REDIS_PORT = process.env.REDIS_PORT;
-  const redis = new Redis(
-    `redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}`
-  );
   const key = context.params.id.join("/");
   let data: any = await redis.get(key);
   data = JSON.parse(data);
@@ -67,7 +55,7 @@ const Result: NextPage = ({
           {league.toUpperCase()} Grandslam
         </h1>
         <div className="flex flex-row items-center gap-2">
-          <h2 className={`p-2 ${color} text-white font-semibold`}>
+          <h2 className={`p-2 bg-green-700 text-white font-semibold`}>
             Tournament: {tournament}
           </h2>
           <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>

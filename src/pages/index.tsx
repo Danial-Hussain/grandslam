@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
 import { Bracket } from "../components/Bracket";
-import Redis from "ioredis";
 import { tournamentParams } from "../utils/utils";
+import redis from "../utils/redis";
 
 const Home: NextPage = ({
   data,
@@ -10,14 +10,13 @@ const Home: NextPage = ({
   hovercolor,
   tournament,
   date,
-  color,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <div className="p-4 flex flex-col gap-14">
       <div className="flex flex-col items-left">
         <h1 className="text-5xl font-semibold mb-4">Most Recent Tournament</h1>
         <div className="flex flex-row items-center gap-2">
-          <h2 className={`p-2 ${color} text-white font-semibold`}>
+          <h2 className="p-2 bg-emerald-700 text-white font-semibold">
             Grandslam: {tournament}
           </h2>
           <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>
@@ -36,13 +35,6 @@ const Home: NextPage = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const REDIS_PASSWORD = process.env.REDIS_PASS;
-  const REDIS_ENDPOINT = process.env.REDIS_HOST;
-  const REDIS_PORT = process.env.REDIS_PORT;
-  const redis = new Redis(
-    `redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}`
-  );
-
   const year = new Date().getUTCFullYear();
   const month = new Date().getUTCMonth() + 1;
   let key = "";
@@ -77,7 +69,6 @@ export const getStaticProps: GetStaticProps = async () => {
       hovercolor,
       tournament,
       date,
-      color,
     },
   };
 };
