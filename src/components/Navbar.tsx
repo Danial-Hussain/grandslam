@@ -22,7 +22,7 @@ const Navbar = () => {
           </Link>
           <a
             className="text-lg text-gray-500 font-mono underline underline-offset-2 decoration-4 decoration-gray-400 cursor-pointer md:text-2xl"
-            href="mailto: ali.danial.hussain@gmail.com"
+            href="https://twitter.com/alibuilds"
           >
             Contact
           </a>
