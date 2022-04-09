@@ -180,6 +180,8 @@ export const Bracket = ({
       </div>
       <svg
         ref={bracketRef}
+        height="100%"
+        width="100%"
         viewBox={`0 0 ${height} ${width}`}
         preserveAspectRatio="none"
       ></svg>
