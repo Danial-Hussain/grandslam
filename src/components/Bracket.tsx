@@ -181,7 +181,7 @@ export const Bracket = ({
       <svg
         ref={bracketRef}
         viewBox={`0 0 ${height} ${width}`}
-        style={{ maxHeight: "100%" }}
+        preserveAspectRatio="none"
       ></svg>
     </div>
   );
