@@ -27,8 +27,6 @@ export const Bracket = ({
 
     const g = d3
       .select(bracketRef.current)
-      .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", `0 0 ${width} ${height}`)
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
