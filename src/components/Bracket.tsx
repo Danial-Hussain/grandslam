@@ -178,7 +178,11 @@ export const Bracket = ({
       >
         <span id="value"></span>
       </div>
-      <svg ref={bracketRef} viewBox={`0 0 ${height} ${width}`}></svg>
+      <svg
+        ref={bracketRef}
+        viewBox={`0 0 ${height} ${width}`}
+        style={{ maxHeight: "100%" }}
+      ></svg>
     </div>
   );
 };
