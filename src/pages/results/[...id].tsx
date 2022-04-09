@@ -1,3 +1,4 @@
+import Head from "next/head";
 import redis from "../../utils/redis";
 import type {
   NextPage,
@@ -49,27 +50,32 @@ const Result: NextPage = ({
     tournamentParams(i_league, i_tournament, i_date);
 
   return (
-    <div className="p-4 flex flex-col gap-14">
-      <div className="flex flex-col items-left">
-        <h1 className="text-5xl font-semibold mb-4">
-          {league.toUpperCase()} Grandslam
-        </h1>
-        <div className="flex flex-row items-center gap-2">
-          <h2 className={`p-2 bg-green-700 text-white font-semibold`}>
-            Tournament: {tournament}
-          </h2>
-          <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>
+    <>
+      <Head>
+        <title>{`${i_league} ${i_tournament} ${i_date}`}</title>
+      </Head>
+      <div className="p-4 flex flex-col gap-14">
+        <div className="flex flex-col items-left">
+          <h1 className="text-5xl font-semibold mb-4">
+            {league.toUpperCase()} Grandslam
+          </h1>
+          <div className="flex flex-row items-center gap-2">
+            <h2 className={`p-2 bg-green-700 text-white font-semibold`}>
+              Tournament: {tournament}
+            </h2>
+            <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Bracket
+            nodeData={data}
+            league={league}
+            wincolor={wincolor}
+            hovercolor={hovercolor}
+          />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <Bracket
-          nodeData={data}
-          league={league}
-          wincolor={wincolor}
-          hovercolor={hovercolor}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

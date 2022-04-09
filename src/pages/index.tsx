@@ -2,6 +2,7 @@ import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
 import { Bracket } from "../components/Bracket";
 import { tournamentParams } from "../utils/utils";
 import redis from "../utils/redis";
+import Head from "next/head";
 
 const Home: NextPage = ({
   data,
@@ -12,25 +13,32 @@ const Home: NextPage = ({
   date,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <div className="p-4 flex flex-col gap-14">
-      <div className="flex flex-col items-left">
-        <h1 className="text-5xl font-semibold mb-4">Most Recent Tournament</h1>
-        <div className="flex flex-row items-center gap-2">
-          <h2 className="p-2 bg-emerald-700 text-white font-semibold">
-            Grandslam: {tournament}
-          </h2>
-          <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>
+    <>
+      <Head>
+        <title>Grandslam Bracket Home</title>
+      </Head>
+      <div className="p-4 flex flex-col gap-14">
+        <div className="flex flex-col items-left">
+          <h1 className="text-5xl font-semibold mb-4">
+            Most Recent Grand Slam
+          </h1>
+          <div className="flex flex-row items-center gap-2">
+            <h2 className="p-2 bg-emerald-700 text-white font-semibold">
+              Grandslam: {tournament}
+            </h2>
+            <h2 className="p-[6.2px] border-2 border-gray-500">{date}</h2>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Bracket
+            nodeData={data}
+            league={league}
+            wincolor={wincolor}
+            hovercolor={hovercolor}
+          />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <Bracket
-          nodeData={data}
-          league={league}
-          wincolor={wincolor}
-          hovercolor={hovercolor}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

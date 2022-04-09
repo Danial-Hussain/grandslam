@@ -2,14 +2,45 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
 import Head from "next/head";
+import * as gtag from "../lib/gtag";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const title = "Grandslam Bracket";
   const description =
     "Relive grandslam tennis history with ATP and WTA tournament brackets dating back to the year 2000!";
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (
+      url: string,
+      { shallow }: { shallow?: boolean }
+    ) => {
+      if (!shallow) gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+      />
+      <Script id="google-analytics-script" strategy="afterInteractive">
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}');
+        `}
+      </Script>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
