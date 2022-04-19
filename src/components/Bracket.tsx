@@ -45,14 +45,16 @@ export const Bracket = ({
     layout(root);
 
     const handleMouseOver = (d, i) => {
-      const xPos = parseFloat(d.screenX);
-      const yPos = parseFloat(d.screenY);
+      const xPos = parseFloat(d.clientX);
+      const yPos = parseFloat(d.clientY);
 
       highlightPlayer(i.data.name);
 
       d3.select(tooltipRef.current)
-        .style("left", xPos + "px")
-        .style("top", yPos + "px")
+        .transition()
+        .duration(200)
+        .style("left", xPos + 20 + "px")
+        .style("top", yPos + 20 + "px")
         .select("#value")
         .text(i.data.name);
 
@@ -113,9 +115,22 @@ export const Bracket = ({
       .filter((d) => d.parent)
       .attr("d", arc)
       .style("stroke", "#222f3e")
-      .style("stroke-width", (d) => d.depth * 2)
+      .style("stroke-width", (d) => d.depth * 1.4)
       .style("fill", (d) => fillColor(d))
       .attr("class", "player");
+
+    slices
+      .append("circle")
+      .filter((d, i) => d.depth > 1 && d.depth < 6 && i % 2 == 0)
+      .attr("transform", (d) => {
+        const rotation = (d.x0 * 180) / Math.PI - 90;
+        const y = (d.y0 + d.y1) / 2;
+        return `rotate(${rotation}) translate(${y}, 0)`;
+      })
+      .attr("r", 5)
+      .attr("fill", "#ccff00")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
 
     slices
       .append("text")
