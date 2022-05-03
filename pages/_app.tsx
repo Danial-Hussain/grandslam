@@ -57,11 +57,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="https://grandslam.vercel.app/logo.png"
         />
 
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={title} />
         <meta
           name="twitter:image"
           content="https://grandslam.vercel.app/logo.png"
         />
-        <meta name="twitter:card" content="summary_large_image" />
+
         <meta name="theme-color" content="#000000" />
         <link
           rel="apple-touch-icon"
