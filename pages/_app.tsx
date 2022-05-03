@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="twitter:title" content={title} />
         <meta
           name="twitter:image"
-          content="https://grandslam.vercel.app/logo.png"
+          content="https://grandslam.vercel.app/twitter_logo.png"
         />
 
         <meta name="theme-color" content="#000000" />
