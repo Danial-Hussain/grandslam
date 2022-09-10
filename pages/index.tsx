@@ -43,8 +43,8 @@ const Home: NextPage = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const year = new Date().getUTCFullYear();
-  const month = new Date().getUTCMonth() + 1;
+  const year = 2022;
+  const month = 6;
   let key = "";
 
   if (month < 3) {
