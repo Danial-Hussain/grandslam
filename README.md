@@ -1,19 +1,9 @@
 # grandslam
 
-## Goal
+**grandslam** serves to be the easiest way to relive tennis history. Featuring radial tournament brackets from the past two decades (both the ATP and WTA), grandslam eliminates the nuisances of traditional tennis tournament brackets and allows you to quickly take a walk down memory lane.  
 
-Visualize tennis history.
+## Technical Details
 
-## High-level Documentation
+The data for the brackets are being scraped from https://www.tennisexplorer.com/ (WTA data) and https://www.atptour.com/ (ATP data) with a python script located in `/data`. The scraped data is formatted into a binary-tree representation, converted to a json string, and stored in a redis instance hosted with UpStash. 
 
-**Data**
-
-The data is being scraped from https://www.tennisexplorer.com/ (WTA data) and https://www.atptour.com/ (ATP data) with a python script. The script grabs the data, formats it into a tree representation and persists the data into redis.
-
-**Frontend**
-
-The site is statically generated using Next.js and styled using TailwindCSS. The radial brackets is built using D3.js.
-
-**Database**:
-
-I am using a redis instance hosted on AWS with Upstash. They offer a pretty generous free tier which meets the requirements for this project. Redis stores data as key-value pairs and in this scenario the key is the unique identifier for a tournament and the value is a string representation of the tournament's tree json data.
+The web application is written in React and TypeScript, and the pages for each tournament bracket are statically generated using Next.js. The majority of ui styling is done using TailwindCSS and the radial brackets are built using D3.js. The code for creating the brackets can be found here: `/components/Bracket.tsx`
